@@ -1,7 +1,7 @@
 *{
     box-sizing: border-box;
 }
-div{
+#dino{
     width: 490px;
     height: 315px;
     /* background-color: blue; */
@@ -15,4 +15,56 @@ body{
     background-size:cover;
     background-repeat: repeat-x;
     overflow: hidden; 
+}
+main{
+    position: absolute;
+    display: flex;
+}
+.container1{
+    /* z-index: -1; */
+    width: 700px;
+    height: 400px;
+    background-color: blue;
+    position: relative;
+    margin: auto;
+    margin-top: 100px;
+    opacity: 0.7;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    /* flex-direction: row-reverse; */
+    
+}
+.container1 div img{
+    /* width: 300px; */
+    height: 300px;
+}
+#dinoImg{
+    position: relative;
+    /* background-color: blueviolet; */
+    height: 300px;
+    width: 300px;
+    opacity: 1;
+}
+#over img{
+    width: 250px;
+    height: auto;
+}
+
+#score{
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    font-size: 30px;
+    color:black
+}
+h3{
+    padding: 50px;
+    font-size: 30px;
+}
+#restart{
+    background-color: blueviolet;
+}
+button{
+    z-index: 100;
 }

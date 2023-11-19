@@ -1,12 +1,14 @@
-const divElm=document.querySelector('div');
+const divElm=document.getElementById('dino');
 divElm.style.top=`${innerHeight-divElm.offsetHeight-100}px`;
 divElm.style.backgroundSize='cover';
+(document.getElementsByClassName('container1')[0]).style.display='none';
 
 let run=true;
 let jump=false;
 let dx=0;
 let dy=0;
 let dead=false;
+let score=0;
 addEventListener('keydown',(e)=>{
     // if(e.key==='ArrowRight'){
     //     run=true;
@@ -63,7 +65,12 @@ function moveBackground(){
     
     
     if(run){
-        
+        score++;
+        document.querySelector('h2').innerText='Score: '+score;
+        document.querySelector('h3').innerText=('Score: '+score);
+
+
+        console.log(score)
         backgroundImagePositionX-=20;
         document.querySelector('body').style.backgroundPositionX=backgroundImagePositionX+'px'
     }
@@ -83,7 +90,7 @@ function jumpRino(){
             i=false;
             dinoTop+=20;
             divElm.style.top=dinoTop+'px';
-            if(dinoTop===554) {
+            if(dinoTop===561) {
                 jump=false;
                 i=true;
             }
@@ -100,21 +107,24 @@ setInterval(jumpRino,30);
 
 for (let index = 0; index < 5; index++) {
     const objectDiv=document.createElement('div');
-    // objectDiv.style.backgroundColor='red';
-    objectDiv.style.width='300px';
-    objectDiv.style.height='300px';
-    objectDiv.style.top='620px';
-    objectDiv.style.backgroundSize='contain'
-    objectDiv.style.backgroundRepeat='no-repeat'
-    objectDiv.style.backgroundImage=`url('dragon/dragon.gif')`;
     objectDiv.className="box";
     objectDiv.id="box"+index;
+    document.querySelector('body').append(objectDiv); 
+    let dragon=document.getElementById("box"+`${index}`)
+    // objectDiv.style.backgroundColor='red';
+    console.log(dragon);
+    dragon.style.width='300px';
+    dragon.style.position='absolute'
+    dragon.style.height='300px';
+    dragon.style.top='620px';
+    dragon.style.backgroundSize='contain'
+    dragon.style.backgroundRepeat='no-repeat'
+    dragon.style.backgroundImage=`url('dragon/dragon.gif')`;
     
 
-    objectDiv.style.marginLeft=(5-index)*(index)*100+2200+'px';
+    dragon.style.marginLeft=(5-index)*(index)*100+2200+'px';
 
 
-    document.querySelector('body').append(objectDiv); 
 }
 let boxAnimationId=0;
 function boxAnimation(){
@@ -128,7 +138,8 @@ function boxAnimation(){
             if(dinoTop>500){
                 console.log("3hrhrherh")
                 run=false;
-                dead=true;   
+                dead=true;
+                (document.getElementsByClassName('container1')[0]).style.display='flex';
             }
         }
     }
@@ -139,7 +150,7 @@ function boxAnimation(){
         }
     }
 }
-let d=0;
+let d=1;
 function deadRino(){
     if(dead){
         let x=d++;
@@ -155,3 +166,9 @@ function deadRino(){
 }
 setInterval(boxAnimation,200);
 setInterval(deadRino,100);
+document.querySelector('button').addEventListener('click',()=>{
+    run=true;
+    dead=false
+    // divElm.style.backgroundImage='null';
+    
+})
