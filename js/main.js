@@ -82,7 +82,7 @@ function jumpRino(){
             i=false;
             dinoTop+=20;
             divElm.style.top=dinoTop+'px';
-            if(dinoTop===369) {
+            if(dinoTop===569) {
                 jump=false;
                 i=true;
             }
@@ -93,4 +93,44 @@ function jumpRino(){
 setInterval(renderDino,100);
 setInterval(runDino,100);
 setInterval(moveBackground,50);
-setInterval(jumpRino,10);
+setInterval(jumpRino,20);
+
+// Adding objects
+
+for (let index = 0; index < 10; index++) {
+    const objectDiv=document.createElement('div');
+    // objectDiv.style.backgroundColor='red';
+    objectDiv.style.width='300px';
+    objectDiv.style.height='300px';
+    objectDiv.style.top='620px';
+    objectDiv.style.backgroundSize='contain'
+    objectDiv.style.backgroundRepeat='no-repeat'
+    objectDiv.style.backgroundImage=`url('dragon/dragon.gif')`;
+    objectDiv.className="box";
+    objectDiv.id="box"+index;
+    
+
+    objectDiv.style.marginLeft=(10-index)*(index)*300+2200+'px';
+
+
+    document.querySelector('body').append(objectDiv); 
+}
+let boxAnimationId=0;
+function boxAnimation(){
+    for (let index = 0; index < 10; index++) {
+        let box=document.getElementById('box'+index);
+        let currentMarginLeft=getComputedStyle(box).marginLeft;
+        let newMarginLeft=parseInt(currentMarginLeft)-100;
+        box.style.marginLeft=newMarginLeft+'px'; 
+    }
+    console.log(getComputedStyle(document.getElementById('box5')).marginLeft);
+    if(getComputedStyle(document.getElementById('box5')).marginLeft==='0px'){
+        console.log('working')
+        for (let index = 0; index < 10; index++) {
+            // let box=document.getElementById('box'+index);
+            document.getElementById('box'+index).style.marginLeft=(10-index)*(index)*100+2200+'px';
+            
+        }
+    }
+}
+setInterval(boxAnimation,400);
