@@ -6,6 +6,7 @@ let run=true;
 let jump=false;
 let dx=0;
 let dy=0;
+let dead=false;
 addEventListener('keydown',(e)=>{
     // if(e.key==='ArrowRight'){
     //     run=true;
@@ -14,7 +15,7 @@ addEventListener('keydown',(e)=>{
    
 });
 addEventListener('keydown',(e)=>{
-    if(e.key==='ArrowUp'){
+    if(e.key==='ArrowUp' && !dead){
         jump=true;
         dy=100;
     }
@@ -50,8 +51,6 @@ function runDino(){
         clearInterval(renderDino);
         if(index>12) index=1;
         divElm.style.backgroundImage=`url('dino/Jump (${index++}).png')`;
-
-
     }
 }
 
@@ -62,6 +61,7 @@ console.log(dinoTop);
 
 function moveBackground(){
     
+    
     if(run){
         
         backgroundImagePositionX-=20;
@@ -70,6 +70,7 @@ function moveBackground(){
 }
 let i=true;
 function jumpRino(){
+    
     if(jump){
         
 
@@ -82,7 +83,7 @@ function jumpRino(){
             i=false;
             dinoTop+=20;
             divElm.style.top=dinoTop+'px';
-            if(dinoTop===569) {
+            if(dinoTop===554) {
                 jump=false;
                 i=true;
             }
@@ -93,11 +94,11 @@ function jumpRino(){
 setInterval(renderDino,100);
 setInterval(runDino,100);
 setInterval(moveBackground,50);
-setInterval(jumpRino,20);
+setInterval(jumpRino,30);
 
 // Adding objects
 
-for (let index = 0; index < 10; index++) {
+for (let index = 0; index < 5; index++) {
     const objectDiv=document.createElement('div');
     // objectDiv.style.backgroundColor='red';
     objectDiv.style.width='300px';
@@ -110,27 +111,47 @@ for (let index = 0; index < 10; index++) {
     objectDiv.id="box"+index;
     
 
-    objectDiv.style.marginLeft=(10-index)*(index)*300+2200+'px';
+    objectDiv.style.marginLeft=(5-index)*(index)*100+2200+'px';
 
 
     document.querySelector('body').append(objectDiv); 
 }
 let boxAnimationId=0;
 function boxAnimation(){
-    for (let index = 0; index < 10; index++) {
+    for (let index = 0; index < 5; index++) {
         let box=document.getElementById('box'+index);
         let currentMarginLeft=getComputedStyle(box).marginLeft;
         let newMarginLeft=parseInt(currentMarginLeft)-100;
         box.style.marginLeft=newMarginLeft+'px'; 
+        if(newMarginLeft<300 ){
+            console.log(dinoTop)
+            if(dinoTop>500){
+                console.log("3hrhrherh")
+                run=false;
+                dead=true;   
+            }
+        }
     }
-    console.log(getComputedStyle(document.getElementById('box5')).marginLeft);
-    if(getComputedStyle(document.getElementById('box5')).marginLeft==='0px'){
-        console.log('working')
-        for (let index = 0; index < 10; index++) {
-            // let box=document.getElementById('box'+index);
-            document.getElementById('box'+index).style.marginLeft=(10-index)*(index)*100+2200+'px';
-            
+    console.log(getComputedStyle(document.getElementById('box4')).marginLeft);
+    if(getComputedStyle(document.getElementById('box4')).marginLeft==='0px'){
+        for (let index = 0; index < 5; index++) {
+            document.getElementById('box'+index).style.marginLeft=(10-index)*(index)*100+2200+'px';   
         }
     }
 }
-setInterval(boxAnimation,400);
+let d=0;
+function deadRino(){
+    if(dead){
+        let x=d++;
+        if(d>8) {
+            clearInterval(deadRino);
+            x=8;
+        
+        };
+        divElm.style.backgroundImage=`url('dino/Dead (${x}).png')`;
+    }
+                    
+
+}
+setInterval(boxAnimation,200);
+setInterval(deadRino,100);
